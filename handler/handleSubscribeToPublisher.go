@@ -1,4 +1,3 @@
-// Package handler implements all http handlers.
 package handler
 
 import (
@@ -9,9 +8,8 @@ import (
 	"user-service/internal"
 )
 
-// HandleBuyStock lets a user buy a stock.
-// If the request's missing a UID header it will return a http.StatusBadRequest (http 400).
-func HandleBuyStock(env *config.Env) http.HandlerFunc {
+// HandleSubscribeToPublisher lets a user with the id uid subscribe to a publisher with an id specified in the request body.
+func HandleSubscribeToPublisher(env *config.Env) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		uidStr := r.Header.Get("UID")
 		if uidStr == "" {
@@ -26,7 +24,7 @@ func HandleBuyStock(env *config.Env) http.HandlerFunc {
 			return
 		}
 
-		var body config.StockBody
+		var body config.SubscribeBody
 
 		err = internal.ParseJSONBody(r.Body, &body)
 		if err != nil {
@@ -34,14 +32,11 @@ func HandleBuyStock(env *config.Env) http.HandlerFunc {
 			return
 		}
 
-		err = env.DB.BuyStock(r.Context(), uid, body)
+		err = env.DB.SubscribeToPublisher(r.Context(), uid, body.PublisherID)
 		if err != nil {
-			if err == config.ErrBadRequest {
-				http.Error(w, "You don't have enough money to buy that many shares", http.StatusBadRequest)
-			} else {
-				http.Error(w, "An unexpected error occured. Please try again later.", http.StatusInternalServerError)
-				log.Println(err)
-			}
+			http.Error(w, "An unexpected error has occured while subscribing to the publisher", http.StatusInternalServerError)
+			log.Println(err)
+			return
 		}
 	}
 }

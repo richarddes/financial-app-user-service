@@ -21,13 +21,17 @@ type (
 		DB Datastore
 	}
 
+	// SubscribeBody represents the body needed to (un)subscribe to a new publisher
+	SubscribeBody struct {
+		PublisherID string `json:"publisherID"`
+	}
+
 	// StockBody represents the expeceted body when a stock bought or sold
 	StockBody struct {
 		Symbol string  `json:"symbol"`
 		Amount uint    `json:"amount"`
 		Price  float32 `json:"price"`
 	}
-
 
 	// StockInfo represents the returned data from a bought stocks
 	StockInfo struct {
@@ -46,5 +50,8 @@ type (
 		SellStock(ctx context.Context, uid uint64, body StockBody) error
 		OwnedStocksInfo(ctx context.Context, uid uint64) ([]StockInfo, error)
 		SetLang(ctx context.Context, uid uint64, lang string) error
+		SubscribeToPublisher(ctx context.Context, uid uint64, publisherID string) error
+		UnsubscribeFromPublisher(ctx context.Context, uid uint64, publisherID string) error
+		SubscribedPublishers(ctx context.Context, uid uint64) ([]string, error)
 	}
 )

@@ -5,6 +5,7 @@ import (
 	"user-service/config"
 )
 
+// StockInfo returns the amount and total price for which a user with the id uid has bought a shares with the symbol body.Symbol.
 func (db *DB) StockInfo(ctx context.Context, uid uint64, body config.StockBody) (uint, float32, error) {
 	var (
 		ownedStocks uint

@@ -76,6 +76,9 @@ func main() {
 	api.HandleFunc("/delete-acc", handler.HandleDeleteAcc(env)).Methods("POST")
 	api.HandleFunc("/sell-stock", handler.HandleSellStock(env)).Methods("POST")
 	api.HandleFunc("/buy-stock", handler.HandleBuyStock(env)).Methods("POST")
+	api.HandleFunc("/subscribe-to-publisher", handler.HandleSubscribeToPublisher(env)).Methods("POST")
+	api.HandleFunc("/unsubscribe-from-publisher", handler.HandleUnsubscribeFromPublisher(env)).Methods("POST")
+	api.HandleFunc("/subscribed-publishers", handler.HandleSubscribedPublishers(env)).Methods("GET")
 	api.HandleFunc("/cash", handler.HandleCash(env)).Methods("GET")
 	api.HandleFunc("/owned-stocks", handler.HandleOwnedStocks(env)).Methods("GET")
 

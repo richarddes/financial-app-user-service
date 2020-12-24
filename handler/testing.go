@@ -18,6 +18,7 @@ func toJSON(body interface{}) ([]byte, error) {
 	return b, nil
 }
 
+// NewRecorder returns a new ResponseRecorder. It sets a a uid and lang header.
 func NewRecorder(t *testing.T, method, url string, body interface{}, handler http.HandlerFunc) *httptest.ResponseRecorder {
 	t.Helper()
 

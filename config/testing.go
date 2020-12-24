@@ -48,6 +48,18 @@ func (db *mockDB) SetLang(ctx context.Context, uid uint64, lang string) error {
 	return nil
 }
 
+func (db *mockDB) SubscribeToPublisher(ctx context.Context, uid uint64, publisherID string) error {
+	return nil
+}
+
+func (db *mockDB) UnsubscribeFromPublisher(ctx context.Context, uid uint64, publisherID string) error {
+	return nil
+}
+
+func (db *mockDB) SubscribedPublishers(ctx context.Context, uid uint64) ([]string, error) {
+	return []string{}, nil
+}
+
 // NewMockEnv returns a new Env with mock values instead of production values.
 func NewMockEnv() *Env {
 	env := new(Env)
